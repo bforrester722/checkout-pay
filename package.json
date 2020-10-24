@@ -1,6 +1,6 @@
 {
   "name": "@smyd/checkout-pay",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "custom element that interfaces with braintree dropin-ui and firebase callable functions to process payments",
   "main": "index.js",
   "scripts": {

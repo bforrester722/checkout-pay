@@ -1,0 +1,84 @@
+
+<!-- ios fix
+ *  ios fix since the dropin inputs are in an iframe 
+ *  must steal focus to then blur the dummy input in order to lower the keyboard 
+-->
+<input id="dummyInput" 
+       style="position:  absolute;
+              top:      -500%;
+              left:     -500%;
+              z-index:  -1;
+              font-size: 16px;">
+</input>
+
+<!-- 
+  the following local dom is inserted into <body> in connectedCallback() 
+  so braintree can insert itself outside of shadow dom scope 
+-->
+
+<div id="payOverlay">
+  <div id="pay-card">
+    <div id="pay-header">
+      <div id="payCardTitle"></div>
+      <paper-icon-button id="exitPayBtn" 
+                         on-click="__exitPayButtonClicked" 
+                         icon="app-icons:close">
+      </paper-icon-button>
+    </div>
+    <paper-checkbox id="vaultCheckbox"
+                    on-change="__savePayMethodsBtnClicked">
+      Securely save my payment methods for next time. *
+    </paper-checkbox>
+    <div id="pay-card-content">
+      <div id="pay-container"></div> <!-- braintree dropin-ui inserted here -->
+      <div id="paySpinnerContainer" class="pay-centered-items-overlay">
+        <paper-spinner-lite id="paySpinner"></paper-spinner-lite>
+        <p id="paySpinnerText"></p>
+      </div>
+    </div>
+    <paper-button id="payBtn" 
+                  on-click="__payButtonClicked" 
+                  disabled
+                  raised>
+                  purchase
+    </paper-button>
+    <braintree-badge></braintree-badge>
+    <p class="disclaimer">
+      * Payment methods are saved in Braintree's PCI compliant Vault. We are never granted access to these records.
+    </p>   
+    <div id="paySuccessMessage" class="pay-centered-items-overlay">
+      <div id="pay-success-content" class="pay-centered-content">
+        <h3 class="pay-centered-text">
+          Thank you!
+        </h3>
+        <iron-icon id="pay-success-icon" icon="app-icons:check"></iron-icon>
+        <p id="pay-authorized-text" class="pay-centered-text">
+          Payment Authorized
+        </p>
+        <p id="pay-confirmation-number" class="pay-centered-text">
+          <!-- confirmation code text inserted here -->
+        </p>
+        <paper-button id="paySuccessBtn" 
+                      on-click="__successButtonClicked" 
+                      raised>
+                      done
+        </paper-button>
+      </div>
+    </div>
+    <div id="payDeclinedMessage" class="pay-centered-items-overlay">
+      <div id="pay-declined-content" class="pay-centered-content">
+        <h3 class="pay-centered-text">
+          Sorry, we could not process your payment at this time.
+        </h3>
+        <p class="pay-centered-text">
+          You have not been charged.
+        </p>
+        <paper-button id="payDeclinedBtn" 
+                      on-click="__declinedButtonClicked" 
+                      raised>
+                      got it
+        </paper-button>
+      </div>
+    </div>
+  </div>
+</div>
